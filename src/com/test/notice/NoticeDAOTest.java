@@ -59,7 +59,7 @@ public class NoticeDAOTest {
 
 	public void selectTest() throws Exception {
 		Connection con = DBConnector.getConnection();
-		noticeDAO.selectOne(con, num);
+		noticeDAO.selectOne(con, 1);
 		
 		con.close();
 	}
