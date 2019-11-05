@@ -37,13 +37,14 @@ public class NoticeDAO {
 	//selectList
 	public ArrayList<NoticeDTO> selectList(Connection con) throws Exception {
 		ArrayList<NoticeDTO> ar = new ArrayList<NoticeDTO>();
+		NoticeDTO noticeDTO = null;
 		
 		String sql = "select * from notice order by num desc";
 		PreparedStatement st = con.prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
 		
 		while(rs.next()) {
-			NoticeDTO noticeDTO = new NoticeDTO();
+			noticeDTO = new NoticeDTO();
 			noticeDTO.setNum(rs.getInt("num"));
 			noticeDTO.setTitle(rs.getString("title"));
 			noticeDTO.setWriter(rs.getString("writer"));

@@ -2,9 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%	
-	ArrayList<NoticeDTO> ar = (ArrayList<NoticeDTO>)request.getAttribute("list");
-%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,19 +26,34 @@
 	      <tr class="info"><th>NO</th><th>SUBJECT</th><th>NAME</th><th>DATE</th><th>HIT</th></tr>
 	    </thead>
 	    <tbody>
-	    	<% for(int i=0;i<ar.size();i++){
-	    			NoticeDTO noticeDTO = ar.get(i); %>
-	      <tr>
-	        <td><%= noticeDTO.getNum() %></td>
-	        <td><a href="./noticeSelect.notice?num=<%= noticeDTO.getNum() %>"><%= noticeDTO.getTitle() %></a></td>
-	        <td><%= noticeDTO.getWriter() %></td>
-	        <td><%= noticeDTO.getReg_date() %></td>
-	        <td><%= noticeDTO.getHit() %></td>
-	      </tr>
-			<% } %>
+	    	<c:forEach items="${requestScope.list}" var="dto">
+		      <tr>
+		        <td>${pageScope.dto.num}</td>
+		        <td><a href="./noticeSelect.notice?num=${pageScope.dto.num}">${pageScope.dto.title}</a></td>
+		        <td>${pageScope.dto.writer}</td>
+		        <td>${pageScope.dto.reg_date}</td>
+		        <td>${pageScope.dto.hit}</td>
+		      </tr>
+	    	</c:forEach>
 	    </tbody>
 	  </table>
-	  <a href="./noticeWrite.notice" class="btn btn-info">Write</a>
+	  
+	  <div>
+	  	<c:forEach begin="1" end="10" step="2" var="i">
+	  		${pageScope.i}
+	  	</c:forEach>
+	  	
+	  	<c:choose>
+	  		<c:when test=""></c:when>
+	  		<c:when test=""></c:when>
+	  		<c:otherwise></c:otherwise>
+	  	</c:choose>
+	  </div>
+	  
+	  <!-- session member, memberDTO -->
+	  <c:if test="${not empty sessionScope.member}">
+	  	<a href="./noticeWrite.notice" class="btn btn-info">Write</a>
+	  </c:if>
 	</div>
 
 </body>

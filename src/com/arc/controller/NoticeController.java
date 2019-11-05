@@ -46,9 +46,11 @@ public class NoticeController extends HttpServlet {
 			actionFoward = noticeService.selectOne(request, response);
 		} else if(url.equals("noticeWrite")) {
 			actionFoward = noticeService.write(request, response);
+		} else if(url.equals("noticeUpdate")) {
+			actionFoward = noticeService.update(request, response);
 		}
 		
-		if(actionFoward.isFlag()) {
+		if(actionFoward.isFlag()) { //flag 값이 true-Forward냐 false-Redirect냐에 따라 결정
 			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());
 			view.forward(request, response);
 		}else {

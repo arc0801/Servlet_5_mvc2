@@ -4,9 +4,6 @@
 <%@page import="com.arc.notice.NoticeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	NoticeDTO noticeDTO = (NoticeDTO)request.getAttribute("dto");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,20 +39,20 @@
 	    </thead>
 	    <tbody>
 	      <tr>
-	        <td><%= noticeDTO.getTitle() %></td>
-	        <td><%= noticeDTO.getWriter() %></td>
-	        <td><%= noticeDTO.getReg_date() %></td>
-	        <td><%= noticeDTO.getHit() %></td>
+	        <td>${requestScope.dto.title}</td>
+	        <td>${requestScope.dto.writer}</td>
+	        <td>${requestScope.dto.reg_date}</td>
+	        <td>${requestScope.dto.hit}</td>
 	      </tr>
 	    </tbody>
 	  </table>
 	  <div class="contents">
-		<%= noticeDTO.getContents() %>
+		${requestScope.dto.contents}
 	  </div>
 	  
-	  	<a href="./noticeUpdate.jsp?num=<%= noticeDTO.getNum() %>" class="btn btn-info">Update</a>
-	 	<a href="./noticeDeleteResult.jsp?num=<%= noticeDTO.getNum() %>" class="btn btn-danger">Delete</a>
-		<a href="./noticeList.jsp" class="btn btn-primary">List</a>
+	  	<a href="./noticeUpdate.notice?num=${requestScope.dto.num}" class="btn btn-info">Update</a>
+	 	<a href="./noticeDeleteResult.notice?num=${requestScope.dto.num}" class="btn btn-danger">Delete</a>
+		<a href="./noticeList.notice" class="btn btn-primary">List</a>
 	</div>
 	
 </body>

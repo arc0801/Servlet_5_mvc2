@@ -26,7 +26,8 @@ public class NoticeService {
 			Connection con = DBConnector.getConnection();
 			ArrayList<NoticeDTO> ar = noticeDAO.selectList(con);
 			con.close();
-			request.setAttribute("list", ar);
+			
+			request.setAttribute("list", ar); //(key-String, value-Object)
 			actionfoward.setFlag(true);
 			actionfoward.setPath("./noticeList.jsp");
 		}catch (Exception e) {
@@ -44,6 +45,7 @@ public class NoticeService {
 			Connection con = DBConnector.getConnection();
 			int num = Integer.parseInt(request.getParameter("num"));
 			NoticeDTO noticeDTO = noticeDAO.selectOne(con, num);
+			
 			if(noticeDTO != null) {
 				request.setAttribute("dto", noticeDTO);
 				actionFoward.setFlag(true);
@@ -96,9 +98,51 @@ public class NoticeService {
 		return actionFoward;
 	}
 	
-	public void update() {
+	public ActionFoward update(HttpServletRequest request, HttpServletResponse response) {
+		ActionFoward actionFoward = new ActionFoward();
 		
+		String method = request.getMethod();
 		
+		if(method.equals("POST")) {
+			try {
+				Connection con = DBConnector.getConnection();
+				NoticeDTO noticeDTO = new NoticeDTO();
+				noticeDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				noticeDTO.setTitle(request.getParameter("title"));
+				noticeDTO.setContents(request.getParameter("contents"));
+				int result = noticeDAO.update(con, noticeDTO);
+				
+				actionFoward.setFlag(true);
+				actionFoward.setPath("../common/common_result.jsp");
+				
+				request.setAttribute("path", "./noticeList.notice");
+				
+				String msg = "Upadate Fail";
+				if(result>0) {
+					msg = "Update Success";
+				}
+				request.setAttribute("msg", msg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else {
+			int num = Integer.parseInt(request.getParameter("num"));
+			
+			Connection con;
+			try {
+				con = DBConnector.getConnection();
+				NoticeDTO noticeDTO = noticeDAO.selectOne(con, num);
+				request.setAttribute("dto", noticeDTO);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			actionFoward.setFlag(true);
+			actionFoward.setPath("./noticeUpdate.jsp");
+		}
+		return actionFoward;
 	}
 	
 	public void delete() {
