@@ -3,6 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="xml" uri="http://java.sun.com/jsp/jstl/xml" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<c:import url="../layout/nav.jsp"></c:import>
 	<div class="container">
 	  <h2>Notice</h2>
 	  <table class="table">
@@ -26,7 +29,7 @@
 	      <tr class="info"><th>NO</th><th>SUBJECT</th><th>NAME</th><th>DATE</th><th>HIT</th></tr>
 	    </thead>
 	    <tbody>
-	    	<c:forEach items="${requestScope.list}" var="dto">
+	    	<c:forEach items="${requestScope.list}" var="dto" varStatus="st">
 		      <tr>
 		        <td>${pageScope.dto.num}</td>
 		        <td><a href="./noticeSelect.notice?num=${pageScope.dto.num}">${pageScope.dto.title}</a></td>
